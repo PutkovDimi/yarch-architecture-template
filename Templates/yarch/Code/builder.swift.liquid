@@ -1,0 +1,20 @@
+//
+//  {{ module_info.name }}.swift
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ date.year }} Putkov Dimi. All rights reserved.
+//
+
+import UIKit
+
+final class {{ module_info.name }}Builder: BaseBuilder {
+
+	func build() -> UIViewController {
+		let presenter = {{ module_info.name }}PresenterImpl()
+		let interactor = {{ module_info.name }}InteractorImpl(presenter: presenter)
+		let controller = {{ module_info.name }}ViewController(interactor: interactor)
+
+		presenter.viewController = controller
+		return controller
+	}
+}

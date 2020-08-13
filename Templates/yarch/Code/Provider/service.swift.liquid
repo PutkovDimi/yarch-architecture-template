@@ -1,0 +1,18 @@
+//
+//  {{ module_info.name }}.swift
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ date.year }} Putkov Dimi. All rights reserved.
+//
+
+protocol {{ module_info.name }}Service {
+	func fetchItems(completion: @escaping ([{{ module_info.name }}Model]?, Error?) -> Void)
+}
+
+/// Get data for module {{ module_info.name }}
+final class {{ module_info.name }}ServiceImpl: {{ module_info.name }}Service {
+
+	func fetchItems(completion: @escaping ([{{ module_info.name }}Model]?, Error?) -> Void) {
+		completion(nil, nil)
+	}
+}

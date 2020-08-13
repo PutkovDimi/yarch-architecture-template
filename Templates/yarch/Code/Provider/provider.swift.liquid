@@ -1,0 +1,40 @@
+//
+//  {{ module_info.name }}.swift
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ date.year }} Putkov Dimi. All rights reserved.
+//
+
+
+protocol {{ module_info.name }}Provider {
+	func getItems(completion: @escaping ([{{ module_info.name }}Model]?, {{ module_info.name }}ProviderError?) -> Void)
+}
+
+enum {{ module_info.name }}ProviderError: Error {
+	case getItemsFailed(underlyingError: Error)
+}
+
+/// Отвечает за получение данных модуля {{ module_info.name }}
+final class {{ module_info.name }}ProviderImpl: {{ module_info.name }}Provider {
+	private let dataStore: {{ module_info.name }}DataStore
+	private let service: {{ module_info.name }}Service
+
+	init(dataStore: {{ module_info.name }}DataStore = {{ module_info.name }}DataStoreImpl(), service: {{ module_info.name }}Service = {{ module_info.name }}ServiceImpl()) {
+		self.dataStore = dataStore
+		self.service = service
+	}
+
+	func getItems(completion: @escaping ([{{ module_info.name }}Model]?, {{ module_info.name }}ProviderError?) -> Void) {
+		if dataStore.models?.isEmpty == false {
+			return completion(self.dataStore.models, nil)
+		}
+		service.fetchItems { [weak self] (array, error) in
+			if let error = error {
+				completion(nil, .getItemsFailed(underlyingError: error))
+			} else if let models = array {
+				self?.dataStore.update(withNewModels: models)
+				completion(self?.dataStore.models, nil)
+			}
+		}
+	}
+}

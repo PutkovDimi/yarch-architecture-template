@@ -1,0 +1,35 @@
+//
+//  {{ module_info.name }}.swift
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ date.year }} Putkov Dimi. All rights reserved.
+//
+
+import UIKit
+
+protocol {{ module_info.name }}Presenter {
+	func presentSomething(response: {{ module_info.name }}.Something.Response)
+}
+
+/// Manages changes  of view state {{ module_info.name }}
+final class {{ module_info.name }}PresenterImpl: {{ module_info.name }}Presenter {
+	weak var viewController: {{ module_info.name }}DisplayLogic?
+
+	// MARK: Do something
+	func presentSomething(response: {{ module_info.name }}.Something.Response) {
+		var viewModel: {{ module_info.name }}.Something.ViewModel
+		
+		switch response.result {
+		case let .failure(error):
+			viewModel = {{ module_info.name }}.Something.ViewModel(state: .error(message: error.localizedDescription))
+		case let .success(result):
+			if result.isEmpty {
+				viewModel = {{ module_info.name }}.Something.ViewModel(state: .emptyResult)
+			} else {
+				viewModel = {{ module_info.name }}.Something.ViewModel(state: .result(result))
+			}
+		}
+		
+		viewController?.displaySomething(viewModel: viewModel)
+	}
+}

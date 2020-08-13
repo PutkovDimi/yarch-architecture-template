@@ -1,0 +1,24 @@
+//
+//  {{ module_info.name }}.swift
+//
+//  Created by {{ developer.name }} on {{ date }}.
+//  Copyright © {{ date.year }} Putkov Dimi. All rights reserved.
+//
+
+protocol {{ module_info.name }}DataStore {
+	var models: [{{ module_info.name }}Model]? { get }
+
+	/// update existed models
+	/// - Parameters:
+	///   - models: new models for saving in store
+	func update(withNewModels models: [{{ module_info.name }}Model])
+}
+
+/// class for storing models {{ module_info.name }}
+final class {{ module_info.name }}DataStoreImpl: {{ module_info.name }}DataStore {
+	var models: [{{ module_info.name }}Model]?
+
+	func update(withNewModels models: [{{ module_info.name }}Model]) {
+		self.models = models
+	}
+}
